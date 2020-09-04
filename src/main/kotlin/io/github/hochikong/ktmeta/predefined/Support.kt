@@ -79,3 +79,12 @@ val JSONMapper: ObjectMapper = ObjectMapper().registerModule(KotlinModule())
  * Used by each executeMgmtTask
  * */
 data class ResultMsg(val succeeded: Boolean, val result: Any, val msg: String)
+
+/**
+ * Supported database connection object.
+ * */
+enum class SupportedDBCon(val identity: String) {
+    JDBCCon("JDBC Connection"),
+    KtormCon("Ktorm single database"),
+    KtormPool("Ktrom database connection pool")
+}

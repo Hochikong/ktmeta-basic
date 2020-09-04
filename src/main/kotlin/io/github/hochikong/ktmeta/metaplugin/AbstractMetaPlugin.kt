@@ -13,7 +13,7 @@
 
 package io.github.hochikong.ktmeta.metaplugin
 
-import io.github.hochikong.ktmeta.predefined.SupportedDBs
+import io.github.hochikong.ktmeta.predefined.SupportedDBCon
 import io.github.hochikong.ktmeta.predefined.SupportedDevices
 
 /**
@@ -25,11 +25,12 @@ abstract class AbstractMetaPlugin : MetadataRegistration {
 
     /**
      * Grant database access permission and save connection instance into dbs. And save token in tokens by database name.
+     * @param connection All supported connection types in SupportedDBCon.
      * @param name Database's name.
      * @param username Raw username.
      * @param password Raw password.
      * */
-    abstract fun grantDB(name: String, username: String, password: String): Boolean
+    abstract fun grantDB(connection: SupportedDBCon, name: String, username: String, password: String): Boolean
 
     /**
      * The basic method for execute any sql. You should provide wrapper for user.
