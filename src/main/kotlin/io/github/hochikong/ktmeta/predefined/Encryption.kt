@@ -14,23 +14,35 @@
 package io.github.hochikong.ktmeta.predefined
 
 import org.jasypt.util.password.ConfigurablePasswordEncryptor
+import org.jasypt.util.text.AES256TextEncryptor
 import java.security.Security
 
 object Encryption {
-    private val encryptor = ConfigurablePasswordEncryptor().apply {
+    private val hashEncryption = ConfigurablePasswordEncryptor().apply {
         setProvider(Security.getProvider("SUN"))
         setAlgorithm("SHA-512")
         setPlainDigest(false)
-//        setStringOutputType("hexadecimal")
         setStringOutputType("base64")
     }
 
     fun encrypt(input: String): String {
-        return encryptor.encryptPassword(input)
+        return hashEncryption.encryptPassword(input)
     }
 
     fun verify(raw: String, encrypted: String): Boolean {
-        return encryptor.checkPassword(raw, encrypted)
+        return hashEncryption.checkPassword(raw, encrypted)
+    }
+
+    fun encryptByPassword(input: String, password: String): String{
+        val aesEncryption = AES256TextEncryptor()
+        aesEncryption.setPassword(password)
+        return aesEncryption.encrypt(input)
+    }
+
+    fun decryptByPassword(input: String, password: String): String{
+        val aesEncryption = AES256TextEncryptor()
+        aesEncryption.setPassword(password)
+        return aesEncryption.decrypt(input)
     }
 
 }

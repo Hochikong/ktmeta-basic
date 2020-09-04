@@ -66,7 +66,7 @@ enum class SizeLimit {
 /**
  * Pre-defined devices support
  * */
-enum class Devices(val identity: String, val className: String) {
+enum class SupportedDevices(val identity: String, val className: String) {
     LocalDevice("LocalDiskDriver", "io.github.hochikong.ktmeta.device.driver.LocalDiskDriver")
 }
 

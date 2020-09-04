@@ -13,6 +13,8 @@
 
 package io.github.hochikong.ktmeta.metaplugin
 
+import io.github.hochikong.ktmeta.predefined.SupportedDBs
+import io.github.hochikong.ktmeta.predefined.SupportedDevices
 
 /**
  * One plugin can use multiple databases. Single database can have multiple libraries.
@@ -20,17 +22,17 @@ package io.github.hochikong.ktmeta.metaplugin
  * */
 abstract class AbstractMetaPlugin : MetadataRegistration {
     // each plugin maintain a map which contains all database connections, connection pools and devices.
-    abstract val dbs: Map<String, Any>
-    abstract val device: Map<String, Any>
+    abstract val dbs: Map<String, SupportedDBs>
+    abstract val devices: Map<String, SupportedDevices>
+    abstract val tokens: Map<String, String>
 
     /**
-     * Grant database access permission and save connection instance into dbs.
+     * Grant database access permission and save connection instance into dbs. And save token in tokens by database name.
      * @param name Database's name.
-     * @param rdbms Identity string in SupportedDBs.xxx.
      * @param username Raw username.
      * @param password Raw password.
      * */
-    abstract fun grantDB(name: String, rdbms: String, username: String, password: String): Boolean
+    abstract fun grantDB(name: String, username: String, password: String): Boolean
 
     /**
      * The basic method for execute any sql. You should provide wrapper for user.
@@ -38,6 +40,11 @@ abstract class AbstractMetaPlugin : MetadataRegistration {
      * @param sql Any method or data for you to run sql.
      */
     abstract fun <T, R> executeSQL(database: String, sql: T): R
+
+    /**
+     * Grant device for [path] access permission and save device instance into devices.
+     * */
+    abstract fun grantDevice(device: SupportedDevices, path: String): Boolean
 
     /**
      * Scan json file's content and convert to sql DML fit for MetadataRegistration
