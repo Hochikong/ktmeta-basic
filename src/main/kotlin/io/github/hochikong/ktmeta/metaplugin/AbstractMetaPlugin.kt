@@ -22,9 +22,6 @@ import io.github.hochikong.ktmeta.predefined.SupportedDevices
  * */
 abstract class AbstractMetaPlugin : MetadataRegistration {
     // each plugin maintain a map which contains all database connections, connection pools and devices.
-    abstract val dbs: Map<String, SupportedDBs>
-    abstract val devices: Map<String, SupportedDevices>
-    abstract val tokens: Map<String, String>
 
     /**
      * Grant database access permission and save connection instance into dbs. And save token in tokens by database name.
